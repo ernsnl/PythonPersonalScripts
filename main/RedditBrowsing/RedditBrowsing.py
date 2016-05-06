@@ -23,7 +23,7 @@ def BeginReddit(args):
     subreddit = args.split(' ')[0]
     print(subreddit)
     howLong = args.split(' ')[1]
-    sleepTime = sleepDuration(int(1))
+    sleepTime = sleepDuration(int(howLong))
     user_agent = "PersonalScrapping by /u/ernsnl"
     after_param = ""
     while(True):
