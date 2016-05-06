@@ -2,6 +2,7 @@ import threading
 import praw
 import time
 import datetime
+import os
 
 
 def beginProcess(fileName):
@@ -10,10 +11,10 @@ def beginProcess(fileName):
     threads = []
     for content in subReddits:
         threadObj = threading.Thread(target=BeginReddit, args=[content])
+        threadObj.start()
         threads.append(threadObj)
 
     for thread in threads:
-        thread.start()
         thread.join()
 
     redditFile.close()
@@ -28,20 +29,29 @@ def BeginReddit(args):
     after_param = ""
     while(True):
         r = praw.Reddit(user_agent=user_agent)
-        submissions = r.get_subreddit(subreddit_name=subreddit).get_hot(limit=25, params={"after": after_param})
-        outputFile = open(subreddit+ "_" + str(datetime.datetime.today().day)+
-                          "_" + str(datetime.datetime.today().month)+
-                          "_" + str(datetime.datetime.today().year) +
-                          "_" + str(datetime.datetime.today().hour) +
-                          "_" + str(datetime.datetime.today().minute) +".txt", "w")
-        for x in submissions:
-            outputFile.write("Title: " + x.title + "\n" + "Url: "+ x.url + '\n')
-            after_param = "t3_" + x.id
-        print(after_param)
-        outputFile.close()
+        submissions = r.get_subreddit(subreddit_name=subreddit).get_hot(limit=25, params={"before": after_param})
+        if(peek(submissions)):
+            if not os.path.exists(subreddit):
+                 os.mkdir(subreddit)
+            outputFile = open(os.path.join(subreddit + "/" +subreddit+ "_" + str(datetime.datetime.today().day)+
+                              "_" + str(datetime.datetime.today().month)+
+                              "_" + str(datetime.datetime.today().year) +
+                              "_" + str(datetime.datetime.today().hour) +
+                              "_" + str(datetime.datetime.today().minute) +".txt"), "w")
+            after_param = ""
+            for x in submissions:
+                if(after_param == ""):
+                    after_param = "t3_" + x.id
+                outputFile.write("Title: " + x.title + "\n" + "Url: "+ x.url + '\n')
+            outputFile.close()
         time.sleep(sleepTime)
 
-
+def peek(iterable):
+    try:
+        first = next(iterable)
+    except StopIteration:
+        return False
+    return True
 
 def sleepDuration(x):
     return {
