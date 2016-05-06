@@ -31,9 +31,9 @@ def BeginReddit(args):
         r = praw.Reddit(user_agent=user_agent)
         submissions = r.get_subreddit(subreddit_name=subreddit).get_hot(limit=25, params={"before": after_param})
         if(peek(submissions)):
-            if not os.path.exists("D:\\Projects\\PyhtonBrowsing\\main\\RedditBrowsing\\" + subreddit):
-                 os.mkdir("D:\\Projects\\PyhtonBrowsing\\main\\RedditBrowsing\\" + subreddit)
-            outputFile = open(os.path.join("D:\\Projects\\PyhtonBrowsing\\main\\RedditBrowsing\\"+ subreddit + "\\" +subreddit+ "_" + str(datetime.datetime.today().day)+
+            if not os.path.exists("D:\\Projects\\PythonBrowsing\\main\\RedditBrowsing\\" + subreddit):
+                 os.mkdir("D:\\Projects\\PythonBrowsing\\main\\RedditBrowsing\\" + subreddit)
+            outputFile = open(os.path.join("D:\\Projects\\PythonBrowsing\\main\\RedditBrowsing\\"+ subreddit + "\\" +subreddit+ "_" + str(datetime.datetime.today().day)+
                               "_" + str(datetime.datetime.today().month)+
                               "_" + str(datetime.datetime.today().year) +
                               "_" + str(datetime.datetime.today().hour) +
@@ -64,8 +64,4 @@ def sleepDuration(x):
         6: 60 * 60 * 24 * 365 # Every Year
     }[x]
 
-beginProcess("D:\\Projects\\PyhtonBrowsing\\main\\RedditBrowsing\\PythonBrowsingInfo.txt")# Your Text File Comes Here
-
-
-
-
+beginProcess("D:\\Projects\\PythonBrowsing\\main\\RedditBrowsing\\PythonBrowsingInfo.txt")# Your Text File Comes Here

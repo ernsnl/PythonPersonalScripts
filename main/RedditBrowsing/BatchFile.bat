@@ -1,1 +1,1 @@
-python D:\Projects\PyhtonBrowsing\main\RedditBrowsing\RedditBrowsing.py
+python D:\Projects\PythonBrowsing\main\RedditBrowsing\RedditBrowsing.py
